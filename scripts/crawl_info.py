@@ -13,18 +13,11 @@ def get_crawl_indexes():
         response.raise_for_status()
         data = response.json()
 
-        limit = 5
-        options = []
-        for option in data:
-            if len(options) >= limit:
-                break
-            options.append(option['id'])
-
     except requests.exceptions.HTTPError as e:
         print(f'Algo deu errado ao carregar os índices: {e}')
         return None
 
-    return options
+    return data[:1][0]['id'] # Aqui limitei a apenas 1 retorno
 
 def query_common_crawl(crawl_id, keyword=None, limit=5):
     base_url = os.getenv('BASE_URL')
